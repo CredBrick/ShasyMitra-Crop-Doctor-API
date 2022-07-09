@@ -1,0 +1,36 @@
+# File / Folder variables
+MODEL_FOLDER : "./models"
+
+# Plant classes
+PLANTS : ['apple', 'cotton', 'grape', 'maize', 'tomato']
+
+# Plant class variables
+APPLE :
+  MODEL : 'Apple.h5'
+  INPUT_SIZE : [512, 512]
+  OUTPUT_CLASSES : ["Healthy", "Multiple Disease", "Rust", "Scab"]
+  NORMALIZE : True
+
+COTTON :
+  MODEL : 'cotton.h5'
+  INPUT_SIZE : [600, 400]
+  OUTPUT_CLASSES : ["Bacterial Blight", "Curl Virus", "Fussarium Wilt", "Healthy"]
+  NORMALIZE : False
+
+GRAPE :
+  MODEL : 'Grape.h5'
+  INPUT_SIZE : [256, 256]
+  OUTPUT_CLASSES : ["Black Rot", "Esca (Black Measles)", "Healthy", "Isariopsis Leaf Blight"]
+  NORMALIZE : False
+
+MAIZE :
+  MODEL : 'Maize.h5'
+  INPUT_SIZE : [224, 224]
+  OUTPUT_CLASSES : ["Common Rust", "Blight", "Gray Leaf Spot", "Healthy"]
+  NORMALIZE : True
+
+TOMATO :
+  MODEL : 'Tomatoleaf.h5'
+  INPUT_SIZE : [224, 224]
+  OUTPUT_CLASSES : ["Bacterial Spot", "Early Blight", "Late Blight","Leaf Mold", "Septoria Leaf Spot", "Two Spotted Spider Mites","Target Spot", "Yellow Leaf Curl Virus", "Mosaic Virus", "Healthy"]
+  NORMALIZE : True

@@ -1,0 +1,13 @@
+# caches
+__pycache__
+
+# model files
+models/
+
+# virtual env
+/crop-doctor/
+
+# file formats
+*.h5
+*.cfg
+*.jpg
