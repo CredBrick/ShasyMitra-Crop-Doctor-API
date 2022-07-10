@@ -1,8 +1,23 @@
 from fastapi.testclient import TestClient
-from main import app
+from main import CONFIG_FILE, app
 import base64
+import yaml
 
 client = TestClient(app)
+
+# testing config
+CONFIG_FILE = './config.yaml'
+
+def test_config():
+    stream = open(CONFIG_FILE, 'r')
+    config = yaml.safe_load(stream)
+
+    assert config['PLANTS'] == ['apple', 'cotton', 'grape', 'maize', 'tomato']
+    assert config['APPLE']['MODEL'] == 'Apple.h5'
+    assert config['COTTON']['MODEL'] == 'cotton.h5'
+    assert config['GRAPE']['MODEL'] == 'Grape.h5'
+    assert config['MAIZE']['MODEL'] == 'Maize.h5'
+    assert config['TOMATO']['MODEL'] == 'Tomatoleaf.h5'
 
 # Open and encode images to test
 img = open('./tests/test_img.jpg','rb')
