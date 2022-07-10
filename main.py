@@ -36,6 +36,16 @@ except Exception as e:
 
 # Defining a generic function to take model as input and return prediction
 def model_pipeline(model, model_name, str_img):
+    """function containing entire model pipeline
+
+    Args:
+        model (tf model): tf model
+        model_name (str): model name as given in config file
+        str_img (str): base64 encoded image as a string
+
+    Returns:
+        str: predicted class for a given image
+    """
     image = model.decode_image(str_img)
     image = model.preprocess(
         image, 
@@ -51,9 +61,16 @@ def index(request: Request):
     body = (
         "<html>"
         "<body style='padding: 10px;'>"
-        "<h1>Welcome to the API</h1>"
+        "<h1>Crop-Doctor API</h1>"
         "<div>"
-        "Check the docs: <a href='/docs'>here</a>"
+        "<p> This API hosts the following endpoints - </p>"
+        "<ol>"
+        "<li> <b>/plants</b> - returns list of all endpoints (for prediction) </li>"
+        "<li> <b>/apple</b> - queries a base64 encoded image and returns a predicted class"
+        "<li> <b>/grape</b> - queries a base64 encoded image and returns a predicted class"
+        "<li> <b>/maize</b> - queries a base64 encoded image and returns a predicted class"
+        "<li> <b>/cotton</b> - queries a base64 encoded image and returns a predicted class"
+        "<li> <b>/tomato</b> - queries a base64 encoded image and returns a predicted class"
         "</div>"
         "</body>"
         "</html>"
