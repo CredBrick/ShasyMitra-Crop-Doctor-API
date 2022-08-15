@@ -1,5 +1,9 @@
-"fastapi[all]"
 tensorflow
 numpy
 opencv-python
 pytest
+fastapi
+uvicorn
+starlette
+pydantic
+PyYAML

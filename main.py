@@ -79,23 +79,23 @@ def index(request: Request):
     return HTMLResponse(content=body)
 
 # Define endpoints for each model
-@app.get("/apple/")
+@app.get("/apple")
 async def apple_disease(str_img: str=""):
     return {"result" : model_pipeline(APPLE_MODEL, 'APPLE', str_img)}
 
-@app.get("/cotton/")
+@app.get("/cotton")
 async def cotton_disease(str_img: str=""):
     return {"result" : model_pipeline(COTTON_MODEL, 'COTTON', str_img)}
 
-@app.get("/grape/")
+@app.get("/grape")
 async def grape_disease(str_img: str=""):
     return {"result" : model_pipeline(GRAPE_MODEL, 'GRAPE', str_img)}
 
-@app.get("/maize/")
+@app.get("/maize")
 async def maize_disease(str_img: str=""):
     return {"result" : model_pipeline(MAIZE_MODEL, 'MAIZE', str_img)}
 
-@app.get("/tomato/")
+@app.get("/tomato")
 async def tomato_disease(str_img: str=""):
     return {"result" : model_pipeline(TOMATO_MODEL, 'TOMATO', str_img)}
 
