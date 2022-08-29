@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, File, UploadFile
+
 import yaml
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -35,18 +36,18 @@ except Exception as e:
     exit()
 
 # Defining a generic function to take model as input and return prediction
-def model_pipeline(model, model_name, str_img):
+def model_pipeline(model, model_name, image, bytes = False):
     """function containing entire model pipeline
 
     Args:
         model (tf model): tf model
         model_name (str): model name as given in config file
-        str_img (str): base64 encoded image as a string
+        image (str or bytes): base64 encoded image as a string or bytes
 
     Returns:
         str: predicted class for a given image
     """
-    image = model.decode_image(str_img)
+    image = model.decode_image(image, bytes)
     image = model.preprocess(
         image, 
         tuple(config[model_name]['INPUT_SIZE']), 
@@ -79,6 +80,9 @@ def index(request: Request):
     return HTMLResponse(content=body)
 
 # Define endpoints for each model
+
+# GET
+
 @app.get("/apple")
 async def apple_disease(str_img: str=""):
     return {"result" : model_pipeline(APPLE_MODEL, 'APPLE', str_img)}
@@ -98,6 +102,35 @@ async def maize_disease(str_img: str=""):
 @app.get("/tomato")
 async def tomato_disease(str_img: str=""):
     return {"result" : model_pipeline(TOMATO_MODEL, 'TOMATO', str_img)}
+
+
+# POST
+
+@app.post("/apple")
+async def apple_disease(file: UploadFile):
+    bin_image = await file.read()
+    return {"result" : model_pipeline(APPLE_MODEL, 'APPLE', bin_image, bytes=True)}
+
+@app.post("/cotton")
+async def cotton_disease(file: UploadFile):
+    bin_image = await file.read()
+    return {"result" : model_pipeline(COTTON_MODEL, 'COTTON', bin_image, bytes=True)}
+
+@app.post("/grape")
+async def grape_disease(file: UploadFile):
+    bin_image = await file.read()
+    return {"result" : model_pipeline(GRAPE_MODEL, 'GRAPE', bin_image, bytes=True)}
+
+@app.post("/maize")
+async def maize_disease(file: UploadFile):
+    bin_image = await file.read()
+    return {"result" : model_pipeline(MAIZE_MODEL, 'MAIZE', bin_image, bytes=True)}
+
+@app.post("/tomato")
+async def tomato_disease(file: UploadFile):
+    bin_image = await file.read()
+    return {"result" : model_pipeline(TOMATO_MODEL, 'TOMATO', bin_image, bytes=True)}
+
 
 # Define one final endpoint which will return list of endpoints
 @app.get("/plants")

@@ -18,18 +18,24 @@ class MLModel:
         self.model = self.load_model(model_path)
         self.classes = classes
 
-    def decode_image(self, str_img):
+    def decode_image(self, image, bytes = False):
         """function to decode a base64 encoded image
 
         Args:
-            str_img (str): base64 encoded image string
+            image (str or bytes): base64 encoded image string or bytes
 
         Returns:
             np.array: image matrix represented by the string
         """
-        data = str_img.split(',')
-        encoded_data = data[1] if len(data)>1 else data[0]
-        nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
+
+        if not bytes:
+            data = image.split(',')
+            encoded_data = data[1] if len(data)>1 else data[0]
+            data_bytes = base64.b64decode(encoded_data)
+        else:
+            data_bytes = image
+
+        nparr = np.frombuffer(data_bytes, np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         return img
 
